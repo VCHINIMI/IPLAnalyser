@@ -26,6 +26,12 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.highestStrikeRate();
 		assertEquals(batsmenList.get(0).playerName, "Ishant Sharma");
 	}
-	
-// 		
+
+//	Highest Batting Average = MS Dhoni
+	@Test
+	public void highestBattingAverageBatsmentest() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByBattingAverage();
+		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
+	}
 }
