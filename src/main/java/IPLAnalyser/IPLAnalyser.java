@@ -14,8 +14,8 @@ public class IPLAnalyser {
 	List<IPLRunsCSV> batsmenList = null;
 
 //	LOAD IPL BATSMEN DATA INTO LIST USING OPENCSV
-	public List<IPLRunsCSV> loadIPLBatsmenData(String csvFilePath) throws IPLException{
-		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) { 
+	public List<IPLRunsCSV> loadIPLBatsmenData(String csvFilePath) throws IPLException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 			batsmenList = csvBuilder.getCSVFileList(reader, IPLRunsCSV.class);
 			return batsmenList;
@@ -26,11 +26,19 @@ public class IPLAnalyser {
 		} catch (Exception e) {
 			throw new IPLException(e.getMessage(), IPLException.ExceptionType.CSV_FILE_PROBLEM);
 		}
-	}	
+	}
 
 //	COMPARE BATSMEN BY STRIKERATE 
 	public List<IPLRunsCSV> highestStrikeRate() {
 		Comparator<IPLRunsCSV> comparator = Comparator.comparing(Batsmen -> Batsmen.strikeRate);
+		this.batsmenList.sort(comparator);
+		Collections.reverse(batsmenList);
+		return this.batsmenList;
+	}
+
+//	COMPARE BATSMEN BY BATTING-AVERAGE
+	public List<IPLRunsCSV> sortByBattingAverage() {
+		Comparator<IPLRunsCSV> comparator = Comparator.comparing(Batsmen -> Batsmen.battingAverage);
 		this.batsmenList.sort(comparator);
 		Collections.reverse(batsmenList);
 		return this.batsmenList;
