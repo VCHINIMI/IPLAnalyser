@@ -50,4 +50,12 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByAverageAndStrikerate();
 		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
 	}
+	
+//	Max Runs && best Average
+	@Test
+	public void MaxRunsThenBestAverage() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByMaximumRunsAndAverage();
+		assertEquals(batsmenList.get(0).playerName, "David Warner");
+	}
 }
