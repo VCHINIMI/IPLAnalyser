@@ -97,6 +97,12 @@ public class IPLAnalyser {
 		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.strikeRate);
 		return bowlerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
 	}
+	
+//	TOP ECONOMY BOWLER	
+	public List<IPLWicketsCSV> sortByBowlingEconomy() {
+		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.economyRate);
+		return bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+	}	
 
 //  BUBBLE SORT METHOD 	
 	private <E> void sort(Comparator<E> IPLComparator, List<E> sortList) {
