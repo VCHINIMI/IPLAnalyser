@@ -59,6 +59,16 @@ public class IPLAnalyser {
 		Collections.reverse(batsmenList);
 		return batsmenList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
 	}
+	
+//	GREAT MAX RUNS WITH BEST AVG POSSIBLE
+	public List<IPLRunsCSV> sortByMaximumRunsAndAverage() {
+		Comparator<IPLRunsCSV> averageComparator = Comparator.comparing(Batsmen -> Batsmen.totalRuns);
+		Comparator<IPLRunsCSV> strikerateComparator = Comparator.comparing(Batsmen -> Batsmen.battingAverage);
+		Comparator<IPLRunsCSV> comparator = averageComparator.thenComparing(strikerateComparator);
+		this.batsmenList.sort(comparator);
+		Collections.reverse(batsmenList);
+		return batsmenList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+	}
 
 //  BUBBLE SORT METHOD 	
 	private <E> void sort(Comparator<E> IPLComparator, List<E> sortList) {
