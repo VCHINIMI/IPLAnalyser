@@ -100,7 +100,7 @@ public class IPLAnalyserTest {
 		assertEquals(bowler.playerName, "Anukul Roy");
 	}
 	
-//	Best batting and bowling averages
+//	Best batting and bowling averages = Umesh Yadav
 	@Test
 	public void findBestBattingandBowlingAverages() throws IPLException {
 		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
@@ -108,4 +108,17 @@ public class IPLAnalyserTest {
 		assertEquals(iplAnalyser.bestBattingAndBowlingAverages(), "Umesh Yadav");
 	}
 	
+// Max Hundreds and Best Batting Averages = David Warner
+	@Test
+	public void findPlayerwithMaxHundredAndBestAverage() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		assertEquals(iplAnalyser.sortByMaximum100AndAverage().playerName, "David Warner ");		
+	}
+	
+// Max Hundreds and Best Batting Averages = David Warner
+	@Test
+	public void findPlayerwithNoHundredAndBestAverage() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		assertEquals(iplAnalyser.sortByMinimum100AndAverage().playerName, "Marcus Stoinis");		
+	}	
 }
