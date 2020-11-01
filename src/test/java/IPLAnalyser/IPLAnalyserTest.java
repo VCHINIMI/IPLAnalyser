@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 
 public class IPLAnalyserTest {
 	public String IPL_RUNS_FILEPATH = "C:\\Users\\vinay\\Desktop\\myWorkSpace\\IPLAnalyser\\src\\test\\resources\\IPL2019FactsheetMostRuns.csv";
+	public String IPL_WICKETS_FILEPATH = "C:\\Users\\vinay\\Desktop\\myWorkSpace\\IPLAnalyser\\src\\test\\resources\\IPL2019FactsheetMostWkts.csv";
 	public IPLAnalyser iplAnalyser;
 
 	@Before
@@ -34,7 +35,7 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByBattingAverage();
 		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
 	}
-	
+
 //	Maximum Number of Sixes And Fours = Andre Russell
 	@Test
 	public void MaximumNumberofSixesAndFours() throws IPLException {
@@ -42,7 +43,7 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByBoundaries();
 		assertEquals(batsmenList.get(0).playerName, "Andre Russell");
 	}
-	
+
 //	Best Average && best Strike Rate	
 	@Test
 	public void bestAverageThenStrikeRate() throws IPLException {
@@ -50,12 +51,28 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByAverageAndStrikerate();
 		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
 	}
-	
+
 //	Max Runs && best Average
 	@Test
 	public void MaxRunsThenBestAverage() throws IPLException {
 		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByMaximumRunsAndAverage();
-		assertEquals(batsmenList.get(0).playerName, "David Warner");
+		assertEquals(batsmenList.get(0).playerName, "David Warner ");
+	}
+
+//	Sort Bowlers by best Average = Krishnappa Gowtham
+	@Test
+	public void sortByBestBowlingAverage() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingAverage();
+		assertEquals(bowlerList.get(0).playerName, "Krishnappa Gowtham");
+	}
+	
+//	Sort Bowlers by best Strike rate = Krishnappa Gowtham
+	@Test
+	public void sortByBestStrikeRate() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingStrikeRate();
+		assertEquals(bowlerList.get(0).playerName, "Krishnappa Gowtham");
 	}
 }
