@@ -14,6 +14,7 @@ import CSVBuilder.*;
 public class IPLAnalyser {
 
 	List<IPLRunsCSV> batsmenList = null;
+	List<IPLWicketsCSV> bowlerList = null;
 
 //	LOAD IPL BATSMEN DATA INTO LIST USING OPENCSV
 	public List<IPLRunsCSV> loadIPLBatsmenData(String csvFilePath) throws IPLException {
@@ -21,6 +22,21 @@ public class IPLAnalyser {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 			batsmenList = csvBuilder.getCSVFileList(reader, IPLRunsCSV.class);
 			return batsmenList;
+		} catch (CSVBuilderException e) {
+			throw new IPLException(e.getMessage(), e.type.name());
+		} catch (IOException e) {
+			throw new IPLException(e.getMessage(), IPLException.ExceptionType.IPl_FILE_PROBLEM);
+		} catch (Exception e) {
+			throw new IPLException(e.getMessage(), IPLException.ExceptionType.CSV_FILE_PROBLEM);
+		}
+	}
+
+//	LOAD IPL BOWLER DATA INTO LIST USING OPENCSV
+	public List<IPLWicketsCSV> loadIPLBowlerData(String csvFilePath) throws IPLException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			bowlerList = csvBuilder.getCSVFileList(reader, IPLWicketsCSV.class);
+			return bowlerList;
 		} catch (CSVBuilderException e) {
 			throw new IPLException(e.getMessage(), e.type.name());
 		} catch (IOException e) {
@@ -49,7 +65,7 @@ public class IPLAnalyser {
 		Collections.reverse(batsmenList);
 		return batsmenList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
 	}
-	
+
 //	GREAT AVG WITH BEST STRIKE RATE POSSIBLE
 	public List<IPLRunsCSV> sortByAverageAndStrikerate() {
 		Comparator<IPLRunsCSV> averageComparator = Comparator.comparing(Batsmen -> Batsmen.battingAverage);
@@ -59,7 +75,7 @@ public class IPLAnalyser {
 		Collections.reverse(batsmenList);
 		return batsmenList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
 	}
-	
+
 //	GREAT MAX RUNS WITH BEST AVG POSSIBLE
 	public List<IPLRunsCSV> sortByMaximumRunsAndAverage() {
 		Comparator<IPLRunsCSV> averageComparator = Comparator.comparing(Batsmen -> Batsmen.totalRuns);
@@ -68,6 +84,18 @@ public class IPLAnalyser {
 		this.batsmenList.sort(comparator);
 		Collections.reverse(batsmenList);
 		return batsmenList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+	}
+
+// TOP BOWLING AVERAGE
+	public List<IPLWicketsCSV> sortByBowlingAverage() {
+		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.bowlingAverage);
+		return bowlerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+	}
+
+//	TOP STRIKERATE BOWLER
+	public List<IPLWicketsCSV> sortByBowlingStrikeRate() {
+		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.strikeRate);
+		return bowlerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
 	}
 
 //  BUBBLE SORT METHOD 	
@@ -82,5 +110,5 @@ public class IPLAnalyser {
 				}
 			}
 		}
-	}	
+	}
 }
