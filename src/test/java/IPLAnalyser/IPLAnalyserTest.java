@@ -64,16 +64,16 @@ public class IPLAnalyserTest {
 	@Test
 	public void sortByBestBowlingAverage() throws IPLException {
 		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
-		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingAverage();
-		assertEquals(bowlerList.get(0).playerName, "Krishnappa Gowtham");
+		IPLWicketsCSV bowler = iplAnalyser.sortByBowlingAverage();
+		assertEquals(bowler.playerName, "Anukul Roy");
 	}
 	
 //	Sort Bowlers by best Strike rate = Krishnappa Gowtham
 	@Test
 	public void sortByBestStrikeRate() throws IPLException {
 		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
-		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingStrikeRate();
-		assertEquals(bowlerList.get(0).playerName, "Krishnappa Gowtham");
+		IPLWicketsCSV bowler = iplAnalyser.sortByBowlingStrikeRate();
+		assertEquals(bowler.playerName, "Alzarri Joseph");
 	}
 	
 //	Sort Bowlers by best Economy = Shivam Dube
@@ -82,5 +82,30 @@ public class IPLAnalyserTest {
 		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
 		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingEconomy();
 		assertEquals(bowlerList.get(0).playerName, "Shivam Dube");
-	}	
+	}
+	
+//	Sort Bowlers by best Strike rate and 4w and 5w = Alzarri Joseph
+	@Test
+	public void sortByBestStrikeRateAnd4w5w() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		IPLWicketsCSV bowler = iplAnalyser.sortByBowlingStrikeRateAnd5w();
+		assertEquals(bowler.playerName, "Alzarri Joseph");
+	}
+	
+//	Sort Bowlers by best Bowling avg and best strike rate = Anukul Roy
+	@Test
+	public void sortByBestBowlingAvgRateAndStrikeRate() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		IPLWicketsCSV bowler = iplAnalyser.sortByBestBowlingAvgRateAndStrikeRate();
+		assertEquals(bowler.playerName, "Anukul Roy");
+	}
+	
+//	Best batting and bowling averages
+	@Test
+	public void findBestBattingandBowlingAverages() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		assertEquals(iplAnalyser.bestBattingAndBowlingAverages(), "Umesh Yadav");
+	}
+	
 }
