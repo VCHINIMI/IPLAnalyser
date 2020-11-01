@@ -143,13 +143,31 @@ public class IPLAnalyser {
 		batsmenList = this.sortByBattingAverage();
 		for (int i = 0; i < (bowlerList.size() > batsmenList.size() ? batsmenList.size() - 1
 				: bowlerList.size() - 1); i++) {
-			if(bowlerList.get(i).bowlingAverage != 0)
-				if(bowlerList.get(i).playerName.equals(batsmenList.get(i).playerName))
+			if (bowlerList.get(i).bowlingAverage != 0)
+				if (bowlerList.get(i).playerName.equals(batsmenList.get(i).playerName))
 					return bowlerList.get(i).playerName;
 		}
-		return null ;
+		return null;
 	}
 
+//	MAX HUNDREDS AND BEST BATTING AVERAGE
+	public IPLRunsCSV sortByMaximum100AndAverage() {
+		Comparator<IPLRunsCSV> centuryComparator = Comparator.comparing(Batsmen -> Batsmen.noOfCenturies);
+		Comparator<IPLRunsCSV> strikerateComparator = Comparator.comparing(Batsmen -> Batsmen.battingAverage);
+		Comparator<IPLRunsCSV> comparator = centuryComparator.reversed().thenComparing(strikerateComparator.reversed());
+		this.batsmenList.sort(comparator);
+		return batsmenList.get(0);
+	}
+	
+	public IPLRunsCSV sortByMinimum100AndAverage() {
+		Comparator<IPLRunsCSV> centuryComparator = Comparator.comparing(Batsmen -> Batsmen.noOfCenturies);
+		Comparator<IPLRunsCSV> halfCenturyComparator = Comparator.comparing(Batsmen -> Batsmen.noOfHalfCenturies);
+		Comparator<IPLRunsCSV> strikerateComparator = Comparator.comparing(Batsmen -> Batsmen.battingAverage);
+		Comparator<IPLRunsCSV> comparator = centuryComparator.thenComparing(halfCenturyComparator).thenComparing(strikerateComparator.reversed());
+		this.batsmenList.sort(comparator);
+		return batsmenList.get(0);
+	}	
+	
 //  BUBBLE SORT METHOD 	
 	private <E> void sort(Comparator<E> IPLComparator, List<E> sortList) {
 		for (int i = 0; i < sortList.size() - 1; i++) {
