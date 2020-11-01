@@ -75,4 +75,12 @@ public class IPLAnalyserTest {
 		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingStrikeRate();
 		assertEquals(bowlerList.get(0).playerName, "Krishnappa Gowtham");
 	}
+	
+//	Sort Bowlers by best Economy = Shivam Dube
+	@Test
+	public void sortByBestEconomy() throws IPLException {
+		iplAnalyser.loadIPLBowlerData(IPL_WICKETS_FILEPATH);
+		List<IPLWicketsCSV> bowlerList = iplAnalyser.sortByBowlingEconomy();
+		assertEquals(bowlerList.get(0).playerName, "Shivam Dube");
+	}	
 }
