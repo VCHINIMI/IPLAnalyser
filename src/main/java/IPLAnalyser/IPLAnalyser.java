@@ -87,22 +87,68 @@ public class IPLAnalyser {
 	}
 
 // TOP BOWLING AVERAGE
-	public List<IPLWicketsCSV> sortByBowlingAverage() {
+	public IPLWicketsCSV sortByBowlingAverage() {
 		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.bowlingAverage);
-		return bowlerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+		bowlerList = bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+		for (IPLWicketsCSV bowler : bowlerList) {
+			if (bowler.bowlingAverage != 0)
+				return bowler;
+		}
+		return null;
 	}
 
 //	TOP STRIKERATE BOWLER
-	public List<IPLWicketsCSV> sortByBowlingStrikeRate() {
+	public IPLWicketsCSV sortByBowlingStrikeRate() {
 		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.strikeRate);
-		return bowlerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+		bowlerList = bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+		for (IPLWicketsCSV bowler : bowlerList) {
+			if (bowler.bowlingAverage != 0)
+				return bowler;
+		}
+		return null;
 	}
-	
+
 //	TOP ECONOMY BOWLER	
 	public List<IPLWicketsCSV> sortByBowlingEconomy() {
 		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.economyRate);
 		return bowlerList.stream().sorted(comparator).collect(Collectors.toList());
-	}	
+	}
+
+//	BEST STRIKE RATE AND HAS 4W AND 5 W	
+	public IPLWicketsCSV sortByBowlingStrikeRateAnd5w() {
+		Comparator<IPLWicketsCSV> strikeRateComparator = Comparator.comparing(bowler -> bowler.strikeRate);
+		Comparator<IPLWicketsCSV> wicketsComparator = Comparator.comparing(bowler -> bowler.wicketHaul_5);
+		Comparator comparator = wicketsComparator.reversed().thenComparing(strikeRateComparator);
+		bowlerList = (List<IPLWicketsCSV>) bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+		return bowlerList.get(0);
+	}
+
+//	BEST AVG AND BEST STRIKE RATE	
+	public IPLWicketsCSV sortByBestBowlingAvgRateAndStrikeRate() {
+		Comparator<IPLWicketsCSV> bowlingAvgComparator = Comparator.comparing(bowler -> bowler.bowlingAverage);
+		Comparator<IPLWicketsCSV> strikeRateComparator = Comparator.comparing(bowler -> bowler.strikeRate);
+		Comparator comparator = bowlingAvgComparator.thenComparing(strikeRateComparator);
+		bowlerList = (List<IPLWicketsCSV>) bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+		for (IPLWicketsCSV bowler : bowlerList) {
+			if (bowler.bowlingAverage != 0)
+				return bowler;
+		}
+		return null;
+	}
+
+//	BEST BATTING AND BOWLING AVERAGES
+	public String bestBattingAndBowlingAverages() {
+		Comparator<IPLWicketsCSV> comparator = Comparator.comparing(bowler -> bowler.bowlingAverage);
+		bowlerList = bowlerList.stream().sorted(comparator).collect(Collectors.toList());
+		batsmenList = this.sortByBattingAverage();
+		for (int i = 0; i < (bowlerList.size() > batsmenList.size() ? batsmenList.size() - 1
+				: bowlerList.size() - 1); i++) {
+			if(bowlerList.get(i).bowlingAverage != 0)
+				if(bowlerList.get(i).playerName.equals(batsmenList.get(i).playerName))
+					return bowlerList.get(i).playerName;
+		}
+		return null ;
+	}
 
 //  BUBBLE SORT METHOD 	
 	private <E> void sort(Comparator<E> IPLComparator, List<E> sortList) {
