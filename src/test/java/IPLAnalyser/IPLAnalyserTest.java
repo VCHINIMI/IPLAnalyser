@@ -34,4 +34,20 @@ public class IPLAnalyserTest {
 		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByBattingAverage();
 		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
 	}
+	
+//	Maximum Number of Sixes And Fours = Andre Russell
+	@Test
+	public void MaximumNumberofSixesAndFours() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByBoundaries();
+		assertEquals(batsmenList.get(0).playerName, "Andre Russell");
+	}
+	
+//	Best Average && best Strike Rate	
+	@Test
+	public void bestAverageThenStrikeRate() throws IPLException {
+		iplAnalyser.loadIPLBatsmenData(IPL_RUNS_FILEPATH);
+		List<IPLRunsCSV> batsmenList = iplAnalyser.sortByAverageAndStrikerate();
+		assertEquals(batsmenList.get(0).playerName, "MS Dhoni");
+	}
 }
